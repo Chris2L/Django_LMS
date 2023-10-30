@@ -1,0 +1,35 @@
+{% load django_htmx %}
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="description" content="LMS"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- Primary Meta Tags -->
+        <title>
+            Responsive Table
+        </title>
+        {% block stylesheets %}
+        {% endblock stylesheets %}
+    </head>
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="body-pd">
+        <div>
+            {% block content %}
+            {% endblock content %}
+        </div>
+
+        <!-- Specific Page JS goes HERE  -->
+        {% comment %} <script src="{% static 'js/htmx.js' %}" defer></script> {% endcomment %}
+        <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+        <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+        <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
+        <script src="https://unpkg.com/hyperscript.org@0.9.9"></script>
+        {% django_htmx_script %}
+
+        {% block javascripts %}
+        {% endblock javascripts %}
+    </body>
+</html>
