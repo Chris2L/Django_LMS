@@ -31,7 +31,7 @@ class CourseUserProgress(models.Model):
 
     class Meta:
         verbose_name = _("CourseUserProgress")
-        verbose_name_plural = _("CourseUserProgresss")
+        verbose_name_plural = _("CourseUserProgress's")
 
     def __str__(self):
         return self.name
