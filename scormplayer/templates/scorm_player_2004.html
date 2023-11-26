@@ -8,7 +8,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
 
 {% comment %} This is the main package to handle the scorm {% endcomment %}
-<script src="https://cdn.jsdelivr.net/npm/scorm-again@latest/dist/scorm-again.js"></script>
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/scorm-again@latest/dist/scorm-again.js"></script> {% endcomment %}
+<script src="{% static 'js\scorm-again.js' %}"></script>
 
 <script type="text/javascript">
   function getSettingsFromParams(urlParams) {
@@ -76,11 +77,14 @@
       entry: 'ab-initio',
       learner_id: '{{ student_id }}',
       learner_name: '{{ student_name }}',
-      location: '{{ lesson_location }}',
+
+      {% comment %} location: '{{ lesson_location }}',
       total_time: '{{ total_time }}',
       completion_status: '{{ lesson_status }}',
       scaled_passing_score: {{ scaled_passing_score }},
-      score: {{ score|safe }},
+      score: {{ score|safe }}, {% endcomment %}
+      {% if objectives %}objectives: {{ objectives|safe|safe }}{% endif %}
+      
     }
   };
   if(urlParams.get('existing')) {
@@ -116,7 +120,7 @@
 <main>
     <div>
       
-        <iframe src="{{ MEDIA_URL }}/media/courses/PlayTheGame_2004/RuntimeBasicCalls_SCORM20043rdEdition/shared/launchpage.html" width="100%"
+        <iframe src="{{ MEDIA_URL }}{{ course_path }}" width="100%"
         height="750px"></iframe>
     </div>
 </main>
