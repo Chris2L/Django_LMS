@@ -83,7 +83,8 @@
       completion_status: '{{ lesson_status }}',
       scaled_passing_score: {{ scaled_passing_score }},
       score: {{ score|safe }}, {% endcomment %}
-      {% if objectives %}objectives: {{ objectives|safe|safe }}{% endif %}
+      {% if objectives %}objectives: {{ objectives|safe }},{% endif %}
+      {% if suspend_data %}suspend_data: '{{ suspend_data|safe }}',{% endif %}
       
     }
   };
