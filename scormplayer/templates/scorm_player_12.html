@@ -55,7 +55,7 @@
   const urlParams = new URLSearchParams(window.location.search);
   let settings = getSettingsFromParams(urlParams);
 
-  settings.lmsCommitUrl = '{% url 'save_scorm' %}';
+  settings.lmsCommitUrl = '{% url 'save_scorm' course_id %}';
   settings.xhrHeaders = {"X-CSRFToken": "{{ csrf_token }}"}
   
 
@@ -114,8 +114,8 @@
 <main>
     <div>
       
-        <iframe src="{{ MEDIA_URL }}/media/courses/PlayTheGame_12/shared/launchpage.html" width="100%"
-        height="750px"></iframe>
+      <iframe src="{{ course_path }}" width="100%"
+      height="750px"></iframe>
     </div>
 </main>
 
