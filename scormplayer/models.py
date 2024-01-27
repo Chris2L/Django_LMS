@@ -31,7 +31,7 @@ class Course(models.Model):
         verbose_name_plural = _("Courses")
 
     def __str__(self):
-        return f"{self.name} ({self.format})"
+        return f"{self.name} ({CourseFormatChoices(self.format).name})"
     
 class Score(models.Model):
     min    = models.FloatField(default=0.0)
@@ -76,7 +76,7 @@ class CourseUserProgress(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    lesson_location = models.IntegerField(default=0)
+    suspend_data = models.TextField(default="")
 
     lesson_status = models.CharField(max_length=10, choices=LessonStatusChoices.choices, default=LessonStatusChoices.INCOMPLETE)
     exit_status = models.CharField(max_length=10, choices=ExitStatusChoices.choices, default=ExitStatusChoices.RESTART)
@@ -110,7 +110,7 @@ class CourseUserProgress(models.Model):
         verbose_name_plural = _("CourseUserProgress's")
 
     def __str__(self):
-        return f"{self.course} ({self.user}) @ {self.lesson_location}"
+        return f"{self.course} ({self.user})"
     
 class CourseUserObjective(models.Model):
     course_user = models.ForeignKey(CourseUserProgress, on_delete=models.CASCADE)
@@ -135,8 +135,8 @@ class CourseUserInteraction(models.Model):
     weighting = models.FloatField()
     
     class Meta:
-        verbose_name = _("CourseInteraction")
-        verbose_name_plural = _("CourseInteractions")
+        verbose_name = _("CourseUserInteraction")
+        verbose_name_plural = _("CourseUserInteractions")
 
     def __str__(self):
         return self.course_user + " " + self.course_interaction

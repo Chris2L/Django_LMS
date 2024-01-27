@@ -30,7 +30,7 @@ class CourseInteractionAdmin(admin.ModelAdmin):
 
 @admin.register(CourseUserProgress)
 class CourseUserProgressAdmin(admin.ModelAdmin):
-    list_display = ('id', 'course', 'user', 'lesson_location')
+    list_display = ('id', 'course', 'user')
     list_filter = ('course', 'user')
 
 
