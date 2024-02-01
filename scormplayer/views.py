@@ -33,66 +33,69 @@ def index_12(request, course_progress: CourseUserProgress):
 def save_scorm_12(course, json_object):
     try:
         user_id = int(json_object["cmi"]["core"]["student_id"])
-        ic(user_id)
+        # ic(user_id)
         user = get_object_or_404(User, pk=user_id)
         course_progress = CourseUserProgress.objects.get(course=course, user=user)
 
-        ic(course_progress)
+        # ic(course_progress)
     except Exception as e:
-        ic(e)
+        # ic(e)
         return HttpResponse(status=200, content="{}")
 
     try:
         current_location = int(json_object["cmi"]["core"]["lesson_location"])
         course_progress.suspend_data = str(current_location)
-        ic(f"Setting lesson loc to {current_location}")
+        # ic(f"Setting lesson loc to {current_location}")
     except Exception as e:
-        ic(e)
+        # ic(e)
+        pass
 
     try:
         lesson_status = json_object["cmi"]["core"]["lesson_status"]
         course_progress.lesson_status = lesson_status
-        ic(f"Setting lesson_status to {lesson_status}")
+        # ic(f"Setting lesson_status to {lesson_status}")
     except Exception as e:
-        ic(e)
+        # ic(e)
+        pass
 
     try:
         exit = json_object["cmi"]["core"]["exit"]
         course_progress.exit_status = exit
-        ic(f"Setting exit to {exit}")
+        # ic(f"Setting exit to {exit}")
     except Exception as e:
-        ic(e)
+        # ic(e)
+        pass
 
     try:
         min = float(json_object["cmi"]["core"]["score"]["min"])
         course_progress.score.min = min
-        ic(f"Setting course_progress.score.min to {min}")
+        # ic(f"Setting course_progress.score.min to {min}")
     except Exception as e:
         course_progress.score.min = 0
-        ic(e)
+        # ic(e)
 
     try:
         max = float(json_object["cmi"]["core"]["score"]["max"])
         course_progress.score.max = max
-        ic(f"Setting course_progress.score.max to {max}")
+        # ic(f"Setting course_progress.score.max to {max}")
     except Exception as e:
         course_progress.score.max = 0
-        ic(e)
+        # ic(e)
 
     try:
         raw = float(json_object["cmi"]["core"]["score"]["raw"])
         course_progress.score.raw = raw
-        ic(f"Setting course_progress.score.raw to {raw}")
+        # ic(f"Setting course_progress.score.raw to {raw}")
     except Exception as e:
         course_progress.score.raw = 0
-        ic(e)
+        # ic(e)
 
     course_progress.score.save()
 
     course_progress.save()
     json_formatted_str = json.dumps(json_object, indent=2)
 
-    print(json_formatted_str)
+    # print(json_formatted_str)
 
     return HttpResponse(status=200, content="{}")
 
@@ -185,11 +188,11 @@ def save_scorm_2004(course, json_object):
     
     try:
         user_id = int(json_object["cmi"]['learner_id'])
-        ic(user_id)
+        # ic(user_id)
         user = get_object_or_404(User, pk=user_id)
         course_progress = CourseUserProgress.objects.get(course=course, user=user)
 
-        ic(course_progress)
+        # ic(course_progress)
     except Exception as e:
         ic(e)
         return HttpResponse(status=200, content="{}")
@@ -197,47 +200,50 @@ def save_scorm_2004(course, json_object):
     try:
         current_location = json_object["cmi"]['suspend_data']
         course_progress.suspend_data = current_location
-        ic(f"Setting lesson loc to {current_location}")
+        # ic(f"Setting lesson loc to {current_location}")
     except Exception as e:
-        ic(e)
+        # ic(e)
+        pass
 
     try:
         lesson_status = json_object["cmi"]['success_status']
         course_progress.lesson_status = lesson_status
-        ic(f"Setting lesson_status to {lesson_status}")
+        # ic(f"Setting lesson_status to {lesson_status}")
     except Exception as e:
-        ic(e)
+        # ic(e)
+        pass
 
     try:
         exit = json_object["cmi"]["exit"]
         course_progress.exit_status = exit
-        ic(f"Setting exit to {exit}")
+        # ic(f"Setting exit to {exit}")
     except Exception as e:
-        ic(e)
+        # ic(e)
+        pass
 
     try:
         min = float(json_object["cmi"]["score"]["min"])
         course_progress.score.min = min
-        ic(f"Setting course_progress.score.min to {min}")
+        # ic(f"Setting course_progress.score.min to {min}")
     except Exception as e:
         course_progress.score.min = 0
-        ic(e)
+        # ic(e)
 
     try:
         max = float(json_object["cmi"]["score"]["max"])
         course_progress.score.max = max
-        ic(f"Setting course_progress.score.max to {max}")
+        # ic(f"Setting course_progress.score.max to {max}")
     except Exception as e:
         course_progress.score.max = 0
-        ic(e)
+        # ic(e)
 
     try:
         raw = float(json_object["cmi"]["score"]["raw"])
         course_progress.score.raw = raw
-        ic(f"Setting course_progress.score.raw to {raw}")
+        # ic(f"Setting course_progress.score.raw to {raw}")
     except Exception as e:
         course_progress.score.raw = 0
-        ic(e)
+        # ic(e)
 
     course_progress.score.save()
 

@@ -22,7 +22,7 @@ class CourseFormatChoices(models.IntegerChoices):
     SCORM_2004 = 1, _('SCORM 2004')
 
 class Course(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
     format = models.IntegerField(choices=CourseFormatChoices.choices, default=CourseFormatChoices.SCORM_12)
     index = models.FileField(upload_to=None, max_length = 200)
 
