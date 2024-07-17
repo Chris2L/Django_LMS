@@ -23,12 +23,21 @@ class CourseFormatChoices(models.IntegerChoices):
 
 class Course(models.Model):
     name = models.CharField(max_length=150, unique=True)
-    format = models.IntegerField(choices=CourseFormatChoices.choices, default=CourseFormatChoices.SCORM_12)
-    index = models.FileField(upload_to=None, max_length = 200)
 
     class Meta:
         verbose_name = _("Course")
         verbose_name_plural = _("Courses")
+
+    def __str__(self):
+        return f"{self.name} ({CourseFormatChoices(self.format).name})"
+
+class ScormCourse(Course):
+    format = models.IntegerField(choices=CourseFormatChoices.choices, default=CourseFormatChoices.SCORM_12)
+    index = models.FileField(upload_to=None, max_length = 200)
+
+    class Meta:
+        verbose_name = _("ScormCourse")
+        verbose_name_plural = _("ScormCourses")
 
     def __str__(self):
         return f"{self.name} ({CourseFormatChoices(self.format).name})"
@@ -47,7 +56,7 @@ class Score(models.Model):
         return f"{self.raw:.2f}% -> {self.raw:.2f}/{self.max:.2f}"
     
 class CourseObjective(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(ScormCourse, on_delete=models.CASCADE)
     number = models.IntegerField()
     name = models.CharField(max_length=150)
 
@@ -73,7 +82,7 @@ class CourseInteraction(models.Model):
 
 class CourseUserProgress(models.Model):
 
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(ScormCourse, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     suspend_data = models.TextField(default="")

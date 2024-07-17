@@ -1,10 +1,18 @@
 from django.contrib import admin
 
-from .models import Course, Score, CourseObjective, CourseInteraction, CourseUserProgress, CourseUserObjective, CourseUserInteraction
+from .models import (
+    CourseInteraction,
+    CourseObjective,
+    CourseUserInteraction,
+    CourseUserObjective,
+    CourseUserProgress,
+    Score,
+    ScormCourse,
+)
 
 
-@admin.register(Course)
-class CourseAdmin(admin.ModelAdmin):
+@admin.register(ScormCourse)
+class ScormCourseAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'format', 'index')
     search_fields = ('name',)
 

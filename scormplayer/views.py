@@ -1,12 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+import json
+
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-import json
+from django.shortcuts import get_object_or_404, render
 from icecream import ic
 
+from .models import CourseFormatChoices, CourseUserProgress, Score, ScormCourse
 
-from .models import CourseFormatChoices, Course, CourseUserProgress, Score
 
 @login_required
 def index_12(request, course_progress: CourseUserProgress):
@@ -264,7 +265,7 @@ def index(request, course_id):
     user = request.user
     ic(user)
     ic(user.id)
-    course = get_object_or_404(Course, pk=course_id)
+    course = get_object_or_404(ScormCourse, pk=course_id)
 
     try:
         course_progress = CourseUserProgress.objects.get(course=course, user=user)
@@ -291,7 +292,7 @@ def index(request, course_id):
 
 @login_required
 def save_scorm(request, course_id):
-    course = get_object_or_404(Course, pk=course_id)
+    course = get_object_or_404(ScormCourse, pk=course_id)
 
     json_object = json.loads(request.body)
 
